@@ -11,6 +11,14 @@ class Character(
     }
 
     fun receiveDamage(damage: Int) {
-        health -= Math.min(damage, health)
+        health -= damage.coerceAtMost(health)
+    }
+
+    fun heal(patient: Character, hitpoints: Int) {
+        patient.receiveHealing(hitpoints)
+    }
+
+    fun receiveHealing(hitpoints: Int) {
+        health += if (health == 0) 0 else hitpoints.coerceAtMost(1000-health)
     }
 }

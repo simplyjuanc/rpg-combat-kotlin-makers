@@ -66,4 +66,37 @@ class CharacterTest {
         }
     }
 
+    @Nested
+    inner class Part3() {
+        @Test
+        fun `healing should increase health`() {
+            val healer = Character()
+            val patient = Character(900)
+
+            healer.heal(patient, 100)
+
+            assertEquals(1000,patient.health)
+        }
+
+        @Test
+        fun `if char is dead it cannot be healed`() {
+            val healer = Character()
+            val patient = Character(0)
+
+            healer.heal(patient, 100)
+
+            assertEquals(false,patient.alive())
+        }
+
+        @Test
+        fun `health cannot go over 1000`() {
+            val healer = Character()
+            val patient = Character(1000)
+
+            healer.heal(patient, 100)
+
+            assertEquals(patient.health, 1000)
+        }
+    }
+
 }
