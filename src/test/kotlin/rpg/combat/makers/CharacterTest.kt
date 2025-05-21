@@ -70,32 +70,50 @@ class CharacterTest {
     inner class Part3() {
         @Test
         fun `healing should increase health`() {
-            val healer = Character()
-            val patient = Character(900)
+            val healer = Character(900)
 
-            healer.heal(patient, 100)
+            healer.heal(healer, 100)
 
-            assertEquals(1000,patient.health)
+            assertEquals(1000,healer.health)
         }
 
         @Test
         fun `if char is dead it cannot be healed`() {
-            val healer = Character()
-            val patient = Character(0)
+            val healer = Character(0)
 
-            healer.heal(patient, 100)
+            healer.heal(healer, 100)
 
-            assertEquals(false,patient.alive())
+            assertEquals(false,healer.alive())
         }
 
         @Test
         fun `health cannot go over 1000`() {
-            val healer = Character()
-            val patient = Character(1000)
+            val healer = Character(1000)
 
+            healer.heal(healer, 100)
+
+            assertEquals(healer.health, 1000)
+        }
+    }
+
+    @Nested
+    inner class Iteration2 {
+        @Test
+        fun `character cannot damage itself`() {
+            val attacker = Character()
+            attacker.attack(attacker, 2000)
+
+            assertEquals(attacker.alive(), true)
+            assertEquals(attacker.health, 1000)
+        }
+
+        @Test
+        fun `character can only heal itself`() {
+            val healer = Character()
+            val patient = Character(health = 10)
             healer.heal(patient, 100)
 
-            assertEquals(patient.health, 1000)
+            assertEquals(patient.health, 10)
         }
     }
 

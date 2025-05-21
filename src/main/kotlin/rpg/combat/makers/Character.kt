@@ -7,6 +7,8 @@ class Character(
     fun alive(): Boolean = health > 0
 
     fun attack(defender: Character, damage: Int) {
+        if (defender === this) return
+
         defender.receiveDamage(damage)
     }
 
@@ -15,6 +17,7 @@ class Character(
     }
 
     fun heal(patient: Character, hitpoints: Int) {
+        if (patient != this) return
         patient.receiveHealing(hitpoints)
     }
 
